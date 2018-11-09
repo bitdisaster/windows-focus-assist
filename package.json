@@ -1,0 +1,29 @@
+{
+  "name": "windows-focus-assist",
+  "version": "1.0.0",
+  "description": "Gets the Focus Assist status in Windows 10 CU or later.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node sample/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitdsaster/windows-focus-assist.git"
+  },
+  "keywords": [
+    "windows",
+    "notifications",
+    "focus",
+    "assist"
+  ],
+  "author": "Jan Hannemann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitdsaster/windows-focus-assist/issues"
+  },
+  "homepage": "https://github.com/bitdsaster/windows-focus-assist#readme",
+  "dependencies": {
+    "bindings": "^1.3.0",
+    "nan": "^2.11.1"
+  }
+}
