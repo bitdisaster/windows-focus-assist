@@ -1,7 +1,7 @@
 
 declare module 'windows-focus-assist' {
     export interface focusAssistStatus {
-        value: int;
+        value: number;
         name: string;
     }
 
