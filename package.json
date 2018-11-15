@@ -1,6 +1,6 @@
 {
   "name": "windows-focus-assist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gets the Focus Assist status in Windows 10 CU or later.",
   "main": "lib/index.js",
   "scripts": {
