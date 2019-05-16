@@ -91,4 +91,8 @@ NAN_MODULE_INIT(Initialize)
 	NAN_EXPORT(target, GetFocusAssist);
 }
 
+#if NODE_MAJOR_VERSION >= 10
+NAN_MODULE_WORKER_ENABLED(GetFocusAssist, Initialize)
+#else
 NODE_MODULE(GetFocusAssist, Initialize)
+#endif
