@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/bitdisaster/windows-focus-assist#readme",
   "dependencies": {
-    "bindings": "^1.3.0",
-    "nan": "^2.11.1"
+    "bindings": "^1.5.0",
+    "nan": "^2.13.2"
   }
 }
