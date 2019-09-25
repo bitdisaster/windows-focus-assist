@@ -11,10 +11,13 @@ npm install windows-focus-assist
 ```
 
 ```
-const { getFocusAssist } = require('windows-focus-assist');
+const { getFocusAssist, isPriority } = require('windows-focus-assist');
 
 const focusAssist = getFocusAssist();
 console.log('FocusAssist:', focusAssist.name);
+
+const isInPriority = isPriority('myApp.AppUserModelId');
+console.log('isInPriorityList:', isInPriority.name);
 ```
 
 #### License
