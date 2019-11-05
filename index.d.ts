@@ -6,4 +6,5 @@ declare module 'windows-focus-assist' {
     }
 
     export function getFocusAssist(): focusAssistStatus;
+    export function isPriority(appUserModelId: string): focusAssistStatus;
 }
