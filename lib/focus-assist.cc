@@ -1,5 +1,4 @@
-#include <nan.h>
-#include <v8.h>
+#include <napi.h>
 
 enum API_RESULT
 {
@@ -146,8 +145,9 @@ enum PRIORITY_RESULT
   }
 #endif
 
-NAN_METHOD(GetFocusAssist)
-{
+Napi::Number GetFocusAssist(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  
   #ifdef _WIN32
     int status;
     try
@@ -172,25 +172,28 @@ NAN_METHOD(GetFocusAssist)
       }
     }
 
-    auto message = Nan::New<v8::Int32>(status);
+    auto message = Napi::Number::New(env, status);
   #else
-    auto message = Nan::New<v8::Int32>(API_RESULT::NOT_SUPPORTED);
+    auto message = Napi::Number::New(env, API_RESULT::NOT_SUPPORTED);
   #endif
-    info.GetReturnValue().Set(message);
+
+  return Napi::Number::New(env, message);
 }
 
-NAN_METHOD(IsPriority)
-{
+Napi::Number IsPriority(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+
   #ifdef _WIN32
-    if (info.Length() < 1 || !info[0]->IsString())
+    if (info.Length() < 1 || !info[0].IsString())
     {
-      Nan::ThrowTypeError("Invalid arguments, expected argument is: AppUserModelId");
-      return;
+      Napi::Error::New(env, "Invalid arguments, expected argument is: AppUserModelId");
+      return Napi::Number::New(env, -1);;
     }
-    auto p0 = Nan::To<v8::String>(info[0]).ToLocalChecked();
-    const char *p0Str = *Nan::Utf8String(p0);
+    
+    auto p0 = info[0].ToString();
+    const char *p0Str = p0.As<Napi::String>().Utf8Value().c_str();
     const LPWSTR aumid = stdStringToLPWSTR(p0Str);
- 
+    
     int status;
     try
     {
@@ -200,21 +203,22 @@ NAN_METHOD(IsPriority)
     {
       status = API_RESULT::FAILED;
     }
-    auto message = Nan::New<v8::Int32>(status);
+    auto message = Napi::Number::New(env, status);
   #else
-    auto message = Nan::New<v8::Int32>(API_RESULT::NOT_SUPPORTED);
+    auto message = Napi::Number::New(env, API_RESULT::NOT_SUPPORTED);
   #endif
-    info.GetReturnValue().Set(message);
+
+  return Napi::Number::New(env, message);
 }
 
-NAN_MODULE_INIT(Initialize)
-{
-  NAN_EXPORT(target, GetFocusAssist);
-  NAN_EXPORT(target, IsPriority);
+Napi::Object Init(Napi::Env env, Napi::Object exports) {
+  exports.Set(Napi::String::New(env, "getFocusAssist"),
+              Napi::Function::New(env, GetFocusAssist));
+
+  exports.Set(Napi::String::New(env, "isPriority"),
+              Napi::Function::New(env, IsPriority));
+
+  return exports;
 }
 
-#if NODE_MAJOR_VERSION >= 10
-  NAN_MODULE_WORKER_ENABLED(focus-assist, Initialize)
-#else
-  NODE_MODULE(focus-assist, Initialize)
-#endif
+NODE_API_MODULE(focusassist, Init)
