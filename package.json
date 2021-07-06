@@ -28,6 +28,6 @@
   "homepage": "https://github.com/bitdisaster/windows-focus-assist#readme",
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "^2.13.2"
+    "node-addon-api": "*"
   }
 }
