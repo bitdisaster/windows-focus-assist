@@ -23,9 +23,9 @@ enum PRIORITY_RESULT
 
   #define NT_SUCCESS_STATUS(Status) (((NTSTATUS)(Status)) >= 0)
 
-  const LPWSTR ALARMS_ONLY_ID = L"Microsoft.QuietHoursProfile.AlarmsOnly";
-  const LPWSTR PRIORITY_ONLY_ID = L"Microsoft.QuietHoursProfile.PriorityOnly";
-  const LPWSTR UNRESTRICTED_ID = L"Microsoft.QuietHoursProfile.Unrestricted";
+  const wchar_t* ALARMS_ONLY_ID = L"Microsoft.QuietHoursProfile.AlarmsOnly";
+  const wchar_t* PRIORITY_ONLY_ID = L"Microsoft.QuietHoursProfile.PriorityOnly";
+  const wchar_t* UNRESTRICTED_ID = L"Microsoft.QuietHoursProfile.Unrestricted";
 
   typedef struct _WNF_STATE_NAME
   {
@@ -124,9 +124,12 @@ enum PRIORITY_RESULT
     CComHeapPtr<wchar_t> profileId;
     if (IsFailed(quietHoursSettings->get_UserSelectedProfile(&profileId))) { return API_RESULT::FAILED; }
 
-    const LPWSTR profileIdWS = static_cast<LPWSTR>(profileId);
+
+    std::wstring priorityOnlyIdWS(PRIORITY_ONLY_ID);
+    LPWSTR lpPriorityOnlyIdWS = &priorityOnlyIdWS[0];
+
     CComPtr<IQuietHoursProfile> profile;
-    if (IsFailed(quietHoursSettings->GetProfile(PRIORITY_ONLY_ID, &profile))) { return API_RESULT::FAILED; }
+    if (IsFailed(quietHoursSettings->GetProfile(lpPriorityOnlyIdWS, &profile))) { return API_RESULT::FAILED; }
 
     uint32_t count = 0;
     {
