@@ -13,7 +13,20 @@
         ['OS=="win"', {
           "sources": [ "lib/focus-assist.cc", "lib/quiethours.idl", "lib/quiethours_h.h", "lib/quiethours_i.c" ],
         }]
-      ]
+      ],
+      "configurations": {
+        "Release": {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "AdditionalOptions": ["/std:c++20"],
+              "AdditionalOptions!": ["-std:c++17"],
+            }
+          }
+        },
+        "Debug": {
+          "inherit_from": ["Release"],
+        }
+      }
     }
   ]
 }
